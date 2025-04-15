@@ -1,0 +1,45 @@
+<%- include("partials/head") %>
+
+    <body>
+
+        <%- include("partials/navbar") %>
+
+            <div class="container my-4">
+                <h2>Manage Products</h2>
+                <a href="/admin/add-products" class="btn btn-primary mb-3">Add New Product</a>
+
+                <table class="table table-bordered border-2 border-dark">
+                    <thead>
+                        <tr class=" bg-black text-light">
+                            <th>ID</th>
+                            <th>Product Name</th>
+                            <th>Category</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <% products.forEach(product=>{ %>
+                    <tbody>
+                      
+                            <td><%= product.id %></td>
+                            <td><%= product.name %></td>
+                            <td><%= product.category %></td>
+                            <td>
+                               <form action="/admin/delete-product/<%= product.id %>" method="post">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                               </form>
+                            </td>
+
+
+                            <% }) %>
+                                <tr>
+
+                                </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <%- include("partials/scripts") %>
+
+    </body>
+
+    </html>

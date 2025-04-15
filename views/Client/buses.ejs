@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Truck Haulers Buses</title>
+
+    <!-- Font Awesome CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<%- include("partials/head") %>
+    <body>
+
+        <%- include("partials/navbar") %>
+
+            <!-- Header Section -->
+<section class="position-relative text-light" style="height: 100vh; overflow: hidden;">
+    <img src="/src/buses/bus-intro.jpeg" alt="Bus Background Image" class="position-absolute w-100 h-100"
+        style="object-fit: cover; z-index: -1;">
+
+    <div class="container-fluid position-relative d-flex flex-column justify-content-center align-items-center h-100 text-center"
+        style="background:  #000000ad;">
+        <h1 class="display-3 fw-bold">Explore Our Buses</h1>
+        <p class="lead">Comfortable and Efficient Bus Solutions for Your Group Travel Needs</p>
+        <a href="#buses" class="btn btn-lg mt-4 text-white fw-bold" style="background: #003366;">Discover Our Buses</a>
+    </div>
+</section>
+
+
+
+            <!-- Introduction Section -->
+            <section class="container py-5"
+                style="background-image: url('your-image-url.jpg'); background-size: cover; background-position: center;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="text-center mb-4">Welcome to Truck Haulers Bus Collection</h1>
+                        <p class="lead text-center fw-bold">
+                            Truck Haulers is one of the most prominent manufacturers of commercial vehicles in India,
+                            known
+                            for its innovation and commitment to quality. Our buses are designed to provide safety,
+                            comfort, and
+                            efficiency for both passengers and drivers. Whether for long-distance travel or city
+                            commutes,
+                            Ashok Leyland buses are built to deliver exceptional performance on every journey.
+                        </p>
+                        <p class="text-center fw-bold">
+                            Explore our range of buses designed to meet different travel needs, from long-distance
+                            routes to
+                            urban transit. We are proud to offer vehicles that support the future of sustainable
+                            transportation.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main Content Section -->
+            <section class="container py-5" id="buses">
+                    <!-- Vehicles List -->
+                    <div class="row">
+                        <% buses.forEach(bus=> { %>
+                            <div class="col-md-4 mb-4 product-card">
+                                <div class="card">
+                                    <img src="<%= bus.productImage %>" class="card-img-top" alt="Compact Light Vehicle">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <%= bus.name %>
+                                        </h5>
+                                        <p class="card-text">
+                                            <%= bus.description %>
+                                        </p>
+                                        <p><strong>
+                                                ₹ <%= bus.price %>
+                                            </strong></p>
+                                        <form action="/add-cart" method="post">
+                                            <input type="hidden" name="product" value="<%= bus.id %>">
+                                            <button href="#" class="btn btn-dark">Add to cart</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }); %>
+                    </div>
+            </section>
+
+                    <%- include("partials/scrollUp") %>
+
+            <!-- Footer Section -->
+            <%- include("partials/footer") %>
+
+                <!-- Bootstrap JS and Popper.js -->
+                <%- include("partials/scripts") %>
+
+    </body>
+
+</html>

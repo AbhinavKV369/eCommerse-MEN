@@ -1,0 +1,64 @@
+
+<style>
+    body{
+        background: rgb(218, 216, 216);
+    }
+    /* Ensure all cards are the same height */
+    .card {
+        background: #003366cb;
+        color: white;
+        height: 100%;
+        border:#e9e9e9 2px solid
+        /* Ensure the card takes up the same height as its container */
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        /* Ensures the content is evenly distributed */
+        height: 100%;
+    }
+
+    .card-img-top {
+        height: 200px;
+        /* Set a fixed height for the image to ensure consistency */
+        object-fit: cover;
+        /* Ensures the image covers the area without distorting */
+    }
+    
+    .card:hover {
+        transform: translateY(-10px);
+
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    }
+    .btn{
+        background: #003366;
+        color: aliceblue;
+    }
+     a {
+        color: rgb(42, 235, 58);
+        font-weight: 600;
+    }
+
+     .payment-form {
+            max-width: 500px;
+            margin: auto;
+        }
+
+        .form-control {
+            margin-bottom: 15px;
+        }
+
+        .payment-method {
+            margin-top: 20px;
+        }
+
+        .btn-primary {
+            width: 100%;
+        }
+</style>
+

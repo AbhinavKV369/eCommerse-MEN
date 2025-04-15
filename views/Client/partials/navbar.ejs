@@ -1,0 +1,47 @@
+
+
+<nav class="navbar navbar-expand-lg navbar-dark p-3" style="background-color: #003366;">
+    <div class="container">
+        <a class="navbar-brand" style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" href="/">TRUCK HAULERS</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto fw-bold">
+                <li class="nav-item me-3"><a class="nav-link active" href="/">Home</a></li>
+                <li class="nav-item me-3"><a class="nav-link active" href="/products">Products</a></li>
+                <li class="nav-item me-3"><a class="nav-link active" href="/buses">Buses</a></li>
+                <li class="nav-item me-3"><a class="nav-link active" href="/trucks">Trucks</a></li>
+                <li class="nav-item me-3"><a class="nav-link active" href="/light-vehicles">Light Vehicles</a></li>
+                <li class="nav-item me-3"><a class="nav-link active" href="/medium-vehicles">Medium Vehicles</a></li>
+
+                <li class="nav-item me-3 dropdown">
+                    <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Info
+                    </a>
+                    <ul class="dropdown-menu" style="border: 3px solid black;">
+                        <li><a class="dropdown-item fw-bold" href="/about">About Us</a></li>
+                        <li><a class="dropdown-item fw-bold" href="/contact">Contact Us</a></li>
+                        <li><a class="dropdown-item fw-bold" href="/services">Service</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item me-3">
+                    <a class="nav-link active" href="/user-dashboard">
+                        <i class="fas fa-user"></i>
+                    </a>
+                </li>
+
+                <li class="nav-item me-3"><a class="nav-link active" href="/login">Login</a></li>
+                <li class="nav-item me-3">
+                    <a class="nav-link active" href="/cart">🛒Cart <span class="badge bg-light text-dark"><%= totalCartItems %>
+                    </span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Add the necessary Bootstrap and Popper.js scripts -->

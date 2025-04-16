@@ -92,6 +92,7 @@ async function handlePostOtp(req, res) {
     }
 
     user.isVerified = true;
+    user.userStatus = true;
     user.otp = undefined;
     user.otpExpires = undefined;
     await user.save();
@@ -152,20 +153,20 @@ async function handlePostLogin(req, res) {
 }
 
 async function handlePostEditProfile(req, res) {
-  const { name, phone, email,address } = req.body;
-  
+  const { name, phone, email, address } = req.body;
+
   try {
     const updatedFields = {
       name,
       phone,
       email,
-      address:{
-      street:address.street,
-      city:address.city,
-      district:address.district,
-      state:address.state,
-      pincode:address.pincode,
-      }
+      address: {
+        street: address.street,
+        city: address.city,
+        district: address.district,
+        state: address.state,
+        pincode: address.pincode,
+      },
     };
 
     const user = await User.findByIdAndUpdate(req.user.id, updatedFields, {
@@ -174,7 +175,7 @@ async function handlePostEditProfile(req, res) {
 
     if (!user) {
       return res.render("client/edit-profile", {
-        user:{},
+        user: {},
         message: "User not found",
       });
     }
@@ -243,7 +244,7 @@ async function handleGetEditProfile(req, res) {
     const user = await User.findById(req.user.id);
 
     if (!user) {
-      return res.json({message: "User not found"})
+      return res.json({ message: "User not found" });
     }
 
     res.render("client/edit-profile", {

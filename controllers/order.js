@@ -76,11 +76,12 @@ async function handleOrderSummary(req, res) {
 }
 
 async function handleGetMyOrders(req, res) {
-  const user = req.user.id;
-  try {
+  const userId = req.user.id;
 
-    const orders = await Order.find({ user: user }).populate("items.product");
-    res.status(200).render("client/my-orders",{
+  try {
+    const orders = await Order.find({ user: userId }).populate("items.product");
+
+    res.status(200).render("client/my-orders", {
       orders
     });
 
@@ -91,13 +92,14 @@ async function handleGetMyOrders(req, res) {
   }
 }
 
+
 async function handleCancelOrder(req,res) {
   const user = req.user.id;
   const orderId = req.params.id;
   try{
    const order = await Order.findOne({  user: user,_id: orderId });
    
-   order.status = "cancelled"
+   order.status = "canceled"
    await order.save()
 
    res.redirect("/my-orders")

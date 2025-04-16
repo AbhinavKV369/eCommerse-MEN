@@ -14,13 +14,16 @@ const {
   handleGetAddProducts,
   handleGetManageOrders,
   handleDeleteOrder,
+  handleOrderStatus,
+  handleGetUserProfile,
+  handleUpdateUserProfile,
+  handleUserStatus,
 } = require("../controllers/admin");
 
 const router = express.Router();
 
 const pages = [
   { route: "/", view: "admin-panel" },
-  { route: "/manage-orders", view: "manage-orders" },
   { route: "/server-error", view: "server-error" },
 ];
 
@@ -32,8 +35,14 @@ router.post("/add-product",upload.single("productImage"),handlePostAddProducts);
 router.post("/delete-product/:id",handleDeleteProducts);
 
 router.get("/manage-users", handleGetUsers);
+router.get("/edit-user/:id",handleGetUserProfile);
+router.post("/update-profile/:id",handleUpdateUserProfile);
+router.get("/toggle-user-status/:id",handleUserStatus);
+
 router.get("/manage-orders",handleGetManageOrders);
+router.post("/update-order-status/:id", handleOrderStatus);
 router.post("/delete-order/:id", handleDeleteOrder);
+
 router.get("/add-products",handleGetAddProducts);
 router.get("/manage-products", handleGetProducts);
 router.get("/user-messages", handleGetMessages);

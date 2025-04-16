@@ -5,8 +5,8 @@
 
       <div class="container-fluid my-4">
         <h2>Manage Orders</h2>
-
         <div class="table-responsive">
+            <% if(orders.length > 0){ %>
           <table class="table table-striped fw-bold border-2 border-dark">
             <thead>
               <tr class="text-white bg-black">
@@ -19,44 +19,50 @@
                 <th scope="col"></th>
               </tr>
             </thead>
+           
             <tbody>
-              <% orders.forEach(order=> { %>
-                <tr>
-                  <td>
-                    <%= order.id %>
-                  </td>
-                  <td>
-                    <%= order.user.name %>
-                  </td>
-                  <td>
-                    <%= order.user.email %>
-                  </td>
-                  <td>
-                    <%= new Date(order.orderDate).toLocaleDateString() %>
-                  </td>
-                  <td>
-                    <form action="/update-order-status/<%= order.id %>" method="post">
-                      <select class="form-select form-select-sm" name="orderStatus" >
-                        <option value="pending" <%=order.status==="pending" ? "selected" : "" %>>Pending</option>
-                        <option value="shipped" <%=order.status==="shipped" ? "selected" : "" %>>Shipped</option>
-                        <option value="Delivered" <%=order.status==="Delivered" ? "selected" : "" %>>Delivered</option>
-                        <option value="canceled" <%=order.status==="canceled" ? "selected" : "" %>>Canceled</option>
-                      </select>
-                    </form>
-                  </td>
-                  <td>
-                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#orderDetailsModal">View</button>
-                  </td>
-                  <td>
-                    <form action="/admin/delete-order/<%= order.id %>" method="post">
-                      <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                    </form>
-                  </td>
-                </tr>
-                <% }) %>
-            </tbody>
+                <% orders.forEach(order=> { %>
+                  <tr>
+                    <td>
+                      <%= order.id %>
+                    </td>
+                    <td>
+                      <%= order.user.name %>
+                    </td>
+                    <td>
+                      <%= order.user.email %>
+                    </td>
+                    <td>
+                      <%= new Date(order.orderDate).toLocaleDateString() %>
+                    </td>
+                    <td>
+                      <form action="/admin/update-order-status/<%= order.id %>" method="post">
+                        <select class="form-select form-select-sm" name="orderStatus">
+                          <option value="pending" <%=order.status==="pending" ? "selected" : "" %>>Pending</option>
+                          <option value="shipped" <%=order.status==="shipped" ? "selected" : "" %>>Shipped</option>
+                          <option value="delivered" <%=order.status==="delivered" ? "selected" : "" %>>Delivered</option>
+                          <option value="canceled" <%=order.status==="canceled" ? "selected" : "" %>>Canceled</option>
+                        </select>
+                        <button type="submit" class="btn bg-success text-light mt-2">Update</button>
+                      </form>
+                    </td>
+                    <td>
+                      <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#orderDetailsModal">View</button>
+                    </td>
+                    <td>
+                      <form action="/admin/delete-order/<%= order.id %>" method="post">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                      </form>
+                    </td>
+                  </tr>
+                  <% }) %>
+            </tbody>   
           </table>
         </div>
+          <% }else{ %>
+          <div class="alert alert-warning text-center mt-5">No items found in manage orders</div>
+            <% } %>
       </div>
 
       <%- include("partials/scripts") %>

@@ -1,14 +1,47 @@
 const User = require("../models/user");
 const Product = require("../models/product");
-const Order = require("../models/order")
+const Order = require("../models/order");
 const Message = require("../models/message");
-
 
 async function handleGetUsers(req, res) {
   const users = await User.find({});
   res.status(200).render("admin/manage-users", {
     users,
   });
+}
+
+async function handleGetUserProfile(req, res) {
+  const user = await User.findById(req.params.id);
+  res.status(200).render("admin/edit-user-profile", {
+    user,
+    message: null,
+  });
+}
+
+async function handleUpdateUserProfile(req, res) {
+  const { name, email, phone } = req.body;
+  try {
+    updatedFields = { name, email, phone };
+    await User.findByIdAndUpdate(req.params.id, updatedFields, { new: true });
+    res.redirect("/admin/manage-users");
+  } catch (error) {
+    res.status(500).render("server-error", {
+      message: error.message,
+    });
+  }
+}
+
+async function handleUserStatus(req,res) {
+  const user = await User.findById(req.params.id);
+  const newStatus = !user.isBlocked;
+  try{
+    await User.findByIdAndUpdate(req.params.id, {isBlocked:newStatus}, {new:true});
+    res.redirect("/admin/manage-users");  
+  }catch(error){
+    res.status(500).render("admin/server-error", {
+      message: error.message,
+    });
+  }
 }
 
 async function handleGetSearchUsers(req, res) {
@@ -18,7 +51,6 @@ async function handleGetSearchUsers(req, res) {
       $or: [
         { name: { $regex: search, $options: "i" } },
         { email: { $regex: search, $options: "i" } },
-      
       ],
     });
     res.status(200).render("admin/manage-users", {
@@ -34,8 +66,7 @@ async function handleGetSearchUsers(req, res) {
 async function handlePostAddProducts(req, res) {
   const { name, description, price, category } = req.body;
   try {
-   
-   const productImage = req.file ? "/uploads/" + req.file.filename : null;
+    const productImage = req.file ? "/uploads/" + req.file.filename : null;
     const newProduct = new Product({
       name,
       description,
@@ -86,34 +117,40 @@ async function handleGetMessages(req, res) {
   });
 }
 
-async function handleGetManageOrders(req,res) {
+async function handleGetManageOrders(req, res) {
   const orders = await Order.find({}).populate("user");
-    const products = await Order.find({}).populate("items.product")
-   res.status(200).render("admin/manage-orders", {
-    users: orders.user,
+
+  res.status(200).render("admin/manage-orders", {
     orders,
-    products
   });
 }
 
-async function handleDeleteOrder(req,res) {
+async function handleOrderStatus(req, res) {
+  const { orderStatus } = req.body;
   const orderId = req.params.id;
-  try{
-    await Order.findByIdAndDelete({_id:orderId})
-    res.redirect("/manage-orders")
-  }catch(errors
+  try {
+    const order = await Order.findById({ _id: orderId });
 
-  ){
-     res.status(200).render("admin/user-messages", {
-    message: error.message,
-  });
+    order.status = orderStatus;
+    await order.save();
+    res.redirect("/admin/manage-orders");
+  } catch (error) {
+    res.status(200).render("admin/server-error", {
+      message: error.message,
+    });
   }
-    const orders = await Order.find({}).populate("user");
-    const products = await Order.find({}).populate("items.product")
-   res.status(200).render("admin/manage-orders", {
-    orders,
-    products
-  });
+}
+
+async function handleDeleteOrder(req, res) {
+  const orderId = req.params.id;
+  try {
+    await Order.findByIdAndDelete({ _id: orderId });
+    res.redirect("/admin/manage-orders");
+  } catch (error) {
+    res.status(200).render("client/server-error", {
+      message: error.message,
+    });
+  }
 }
 
 async function handleGetSearchMessages(req, res) {
@@ -147,11 +184,14 @@ async function handleDeleteMessages(req, res) {
   }
 }
 
-
 module.exports = {
   handleGetUsers,
   handleGetSearchUsers,
+  handleGetUserProfile,
+  handleUpdateUserProfile,
+  handleUserStatus,
   handleGetManageOrders,
+  handleOrderStatus,
   handleDeleteOrder,
   handlePostAddProducts,
   handleGetAddProducts,

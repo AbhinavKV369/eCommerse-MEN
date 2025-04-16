@@ -18,33 +18,42 @@
         </div>
 
         <div class="row mt-4">
+            <% if(messages.length > 0){ %>
             <% messages.forEach(message=> { %>
-            <div class="col-md-4 mb-3" id="message-card">
-           
+                <div class="col-md-4 mb-3" id="message-card">
+            
                     <div class="card" style="height: 100%;">
                         <div class="card-header">
-                            <h5 class="card-title"><%= message.email %></h5>
+                            <h5 class="card-title">
+                                <%= message.email %>
+                            </h5>
                         </div>
                         <div class="card-body">
-                            <h6 class="card-subtitle mb-2 "> <strong>Subject:</strong> <%= message.subject %></h6>
+                            <h6 class="card-subtitle mb-2 "> <strong>Subject:</strong>
+                                <%= message.subject %>
+                            </h6>
                             <h8 class="card-subtitle mb-2">
-                           <strong>Message:</strong> <%= message.message %>
+                                <strong>Message:</strong>
+                                <%= message.message %>
                             </h8>
                             <br>
                             <h8 class="card-subtitle mb-2">
                                 <strong>Date:</strong>
                                 <%= message.date %>
                             </h8>
-                
+            
                             <form action="/admin/delete-message/<%= message._id %>" method="post" class="mt-3">
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                         </div>
                     </div>
-             
-              
-            </div>
-<% }); %>
+            
+            
+                </div>
+                <% }); %>
+           <% }else{ %>
+            <p class="alert alert-warning mt-3 text-center">No messages to show</p>
+          <% } %>
               
         </div>
     </div>
